@@ -1,0 +1,87 @@
+extends base
+
+block content 
+    div#videoContainer(data-id=video._id)
+        //- data element로 get을 하지 않기에 req.params 로 id를 가져올 수 없어 id를 추출해서 임시로 html에 저장하는 방법.
+        video(src="/" + video.fileUrl)
+        div#videoControls.videoControls 
+            div.videoControls__play
+                span#play.videoControls__playBtn
+                    i.fas.fa-play
+                div.videoControls__time
+                    span#currentTime 00:00
+                    span  /  
+                    span#totalTime 00:00
+            input(type="range", step="1", value="0", min="0")#timeline.videoControls__timeline
+            div.videoControls__volume
+                input(type="range", step="0.1", value=0.5, min="0", max="1")#volume
+                span#mute
+                    i.fas.fa-volume-up 
+            div 
+                span#fullScreen     
+                    i.fas.fa-expand
+
+    div.video__data
+        p.video__title=video.title
+        small.video__owner Uploaded by 
+            a(href=`/users/${video.owner._id}`)=video.owner.name 
+        small.video__createdAt=new Date(video.createdAt).toLocaleDateString("ko-kr", {weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'})
+        if String(video.owner._id) === String(loggedInUser._id)
+            a(href=`${video.id}/edit`) Edit Video &rarr;
+            a(href=`${video.id}/delete`) Delete Video &rarr;
+    if loggedIn 
+        div.video__add-comments
+            form.video__comment-form#commentForm
+                textarea(cols="30", rows="10", placeholder="Write a nice comment...")
+                button Add Comment
+    div.video__comments 
+        ul  
+            each comment in video.comments.reverse()
+                li.video__comment(data-id=comment.id)
+                    i.fas.fa-comment
+                    span  #{comment.text}
+                    span  X
+                    //- 삭제기능 만들기 16.8
+
+block scripts 
+    script(src="/static/js/videoPlayer.js")
+    script(src="/static/js/commentSection.js")
+
+
+
+
+    //- div#videoContainer 
+    //-     video(src="/"+video.fileUrl)
+    //-     div#videoControls
+    //-         button#play Play 
+    //-         button#mute Mute 
+    //-         input(type="range", step="0.1" value=0.5 min="0" max="1")#volume
+    //-         div 
+    //-             span#currentTime 00:00
+    //-             span  / 
+    //-             span#totalTime 00:00
+    //-         div 
+    //-             input(type="range", step="1" value="0" min="0")#timeline
+    //-         div 
+    //-             button#fullscreen Enter Full Screen
+
+
+
+    //- video를 보기 위해서 경로 설정 및 컨트롤러 부여
+        "/" 를 해준 이유는 아마.. 랜더링 경로가 http://localhost:3000/videos 이고
+        http://localhost:3000/videos/628da6450399aaa383250993 이게 비디오 경로이기 때문이지 않을까 싶다. -//
+    //- div 
+    //-     p=video.description
+    //-     small=video.createdAt
+    //- div 
+    //-     small Uploaded by 
+    //-         a(href=`/users/${video.owner._id}`)=video.owner.name
+    //- if String(video.owner._id) === String(loggedInUser._id)
+    //-     //- if video.owner === loggedInUser._id  전자는 object 형태이고, 후자는 string 이라 바로하면 안된다.-//
+
+    //-     a(href = `${video.id}/edit`) Edit Video &rarr;
+    //-     br
+    //-     a(href = `${video.id}/delete`) Delete Video &rarr;
+
+    
+    

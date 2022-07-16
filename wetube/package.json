@@ -1,0 +1,54 @@
+{
+  "name": "wetube_original",
+  "version": "1.0.0",
+  "description": "the best way to watch videos.",
+  "scripts": {
+    "start":"node build/init.js",
+    "build":"npm run build:server && npm run build:assets",
+    "build:server": "babel src -d build",
+    "build:assets":"webpack --mode=production",
+    "dev:server": "nodemon",
+    "dev:assets": "webpack --mode=development -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MoonHyunSeong/wetube_original.git"
+  },
+  "author": "MOON HYUN SEONG",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MoonHyunSeong/wetube_original/issues"
+  },
+  "homepage": "https://github.com/MoonHyunSeong/wetube_original#readme",
+  "dependencies": {
+    "@ffmpeg/core": "^0.8.5",
+    "@ffmpeg/ffmpeg": "^0.9.7",
+    "bcrypt": "^5.0.1",
+    "connect-mongo": "^4.6.0",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "express-flash": "0.0.2",
+    "express-session": "^1.17.3",
+    "mongoose": "^6.3.3",
+    "morgan": "^1.10.0",
+    "multer": "^1.4.4",
+    "node-fetch": "^2.6.7",
+    "pug": "^3.0.2",
+    "regenerator-runtime": "^0.13.9"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.17.10",
+    "@babel/core": "^7.18.5",
+    "@babel/node": "^7.16.0",
+    "@babel/preset-env": "^7.16.0",
+    "babel-loader": "^8.2.5",
+    "css-loader": "^6.7.1",
+    "mini-css-extract-plugin": "^2.6.0",
+    "nodemon": "^2.0.15",
+    "sass": "^1.52.2",
+    "sass-loader": "^13.0.0",
+    "style-loader": "^3.3.1",
+    "webpack": "^5.73.0",
+    "webpack-cli": "^4.9.2"
+  }
+}
